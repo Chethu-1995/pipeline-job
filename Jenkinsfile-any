@@ -13,7 +13,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'echo "this is deploy stage'
+                sh 'echo "this is deploy stage"'
+                sh 'ls > log-deployfile'
             }
         }
         stage('Testing-1') {
