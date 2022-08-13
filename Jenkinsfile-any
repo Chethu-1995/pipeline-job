@@ -8,6 +8,7 @@ pipeline {
                     pwd
                     ls > log-buildfile
                     echo "this is build stage"
+                    sleep 3
                 '''    
             }
         }
@@ -15,12 +16,14 @@ pipeline {
             steps {
                 sh 'echo "this is deploy stage"'
                 sh 'ls > log-deployfile'
+                sleep 3
             }
         }
         stage('Testing-1') {
             steps {
                 echo "this is testing-1 stage"
                 sh 'ls > log-testing-1file'
+                sleep 3
             }
         }
         stage('Testing-2') {
@@ -28,6 +31,7 @@ pipeline {
                 sh '''
                     echo "this is testing-2 stage"
                     ls > log-testing-2file
+                    sleep 3
                 '''    
             }
         }
