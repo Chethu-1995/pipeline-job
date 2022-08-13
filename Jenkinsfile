@@ -1,0 +1,27 @@
+pipeline {
+    agent none
+    stages {
+        stage('Build') {
+            agent { label 'slave2'}
+            steps {
+                sh '''
+                    cd /home/ec2-user/java/workspace/job1
+                    mvn clean install
+                '''    
+            }
+        }
+        stage('Deploy') {
+            agent { label 'slave2'}
+            steps {
+                sh 'scp /home/ec2-user/java/workspace/job1/target/works-with-heroku-1.0.war ec2-user@172.31.38.118:/home/ec2-user/tomcat/webapps'
+                sh 'echo "war file deployed to tomcat" >> log-deploy-file'
+            }
+        }
+        stage('Testing') {
+            agent { label 'slave2'}
+            steps {
+                sh 'echo "test cases are tested" >> log-test-file'
+            }            
+        }
+    }
+}
