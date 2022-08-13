@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh '''
                     echo "test cases are tested" >> log-test-file
-                    "mv /home/ec2-user/java/workspace/pipeline-job2/java-project /home/ec2-user/java/workspace"
+                    rm -rf /home/ec2-user/java/workspace/pipeline-job2/java-project
                 '''
             }            
         }
