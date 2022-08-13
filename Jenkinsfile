@@ -5,6 +5,7 @@ pipeline {
             agent { label 'slave2'}
             steps {
                 sh '''
+                    git branch: 'main', url: 'https://github.com/rajath177/java-project.git'
                     cd /home/ec2-user/java/workspace/job1
                     mvn clean install
                 '''    
