@@ -1,0 +1,47 @@
+pipeline {
+    agent none
+    stages {
+        stage('Build') {
+            agent { label 'slave2'}
+            steps {
+                sh '''
+                    #!/bin bash
+                    pwd
+                    ls > log-buildfile
+                    echo "this is build stage"
+                    sleep 5
+                '''    
+            }
+        }
+        stage('Deploy') {
+            agent { label 'slave1'}
+            steps {
+                sh 'echo "this is deploy stage"'
+                sh 'ls > log-deployfile'
+                sleep 5
+            }
+        }
+        stage('Testing') {
+            parallel {
+                stage('Testing-1') {
+                    agent { label 'master'}
+                    steps {
+                        echo "this is testing-1 stage"
+                        sh 'ls > log-testing-1file'
+                        sleep 5
+                    }
+                }
+                stage('Testing-2') {
+                    agent any
+                    steps {
+                        sh '''
+                            echo "this is testing-2 stage"
+                            ls > log-testing-2file
+                            sleep 5
+                        '''    
+                    }
+                }
+            }
+        }        
+    }
+}
