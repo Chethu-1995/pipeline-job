@@ -5,7 +5,7 @@ pipeline {
             agent { label 'slave2'}
             steps {
                 sh '''
-                    git clone https://github.com/rajath177/java-project.git
+                    git pull https://github.com/rajath177/java-project.git
                     cd /home/ec2-user/java/workspace/pipeline-job2/java-project
                     mvn clean install
                 '''    
