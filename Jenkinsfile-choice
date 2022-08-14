@@ -12,34 +12,36 @@ pipeline {
             agent any 
             steps {
                 script {
-                if(params.STAGE == 'build')
-                {
-                    git branch: params.BRANCH, url: params.GIT_REPO
-                    sh '''
-                        #!/bin/bash 
-                        pwd 
-                        ls > log-buildfile
-                        echo "This is build stage"
-                        sleep 5
-                    '''              
-                } else {
-                    echo "skipping Build stage...."
+                    if(params.STAGE == 'build')
+                    {
+                        git branch: params.BRANCH, url: params.GIT_REPO
+                        sh '''
+                            #!/bin/bash 
+                            pwd 
+                            ls > log-buildfile
+                            echo "This is build stage"
+                            sleep 5
+                        '''              
+                    } else {
+                        echo "skipping Build stage...."
+                    }
                 }     
             }
         }
 
-        stage('Deploy')   {
+        stage('Deploy') {
             agent { label 'slave1' } 
             steps {
                 script {
-                if(params.STAGE == 'deploy')
-                {    
-                    sh 'echo "This is deploy stage"'
-                    sh 'ls > log-deployfile'
-                    sh 'sleep 5'
-                    echo "${params.BRANCH}"
-                    echo "${params.GIT_REPO}"
-                }    
+                    if(params.STAGE == 'deploy')
+                    {    
+                        sh 'echo "This is deploy stage"'
+                        sh 'ls > log-deployfile'
+                        sh 'sleep 5'
+                        echo "${params.BRANCH}"
+                        echo "${params.GIT_REPO}"
+                    }
+                }        
             }
         }
     }
