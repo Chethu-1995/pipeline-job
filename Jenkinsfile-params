@@ -27,8 +27,8 @@ pipeline {
                 sh 'echo "This is deploy stage"'
                 sh 'ls > log-deployfile'
                 sh 'sleep 5'
-                echo "params.BRANCH"
-                echo "params.GIT_REPO"
+                echo "${params.BRANCH}"
+                echo "${params.GIT_REPO}"
             }
         }
     }
