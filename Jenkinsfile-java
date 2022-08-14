@@ -8,7 +8,7 @@ pipeline {
                     #!/bin/bash 
                     pwd 
                     ls > log-buildfile
-                    echo "This is build stage"
+                    echo "This is a build stage"
                     mvn clean package
                 ''' 
             }
