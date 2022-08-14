@@ -1,0 +1,35 @@
+pipeline {
+    agent none
+
+    parameters {
+        string(name: 'BRANCH', description: 'Enter the branch to build', defaultValue: 'main')
+        string(name: 'GIT_REPO', description: 'Enter the repo url', defaultValue: 'https://github.com/jaintpharsha/devops-june-2022.git')
+    }
+
+    stages {
+        stage('Build') {
+            agent any 
+            steps {
+                git branch: params.BRANCH, url: params.GIT_REPO
+                sh '''
+                    #!/bin/bash 
+                    pwd 
+                    ls > log-buildfile
+                    echo "This is build stage"
+                    sleep 5
+                '''  
+            }
+        }
+
+        stage('Deploy') {
+            agent { label 'slave1' } 
+            steps {
+                sh 'echo "This is deploy stage"'
+                sh 'ls > log-deployfile'
+                sh 'sleep 5'
+                echo "params.BRANCH"
+                echo "params.GIT_REPO"
+            }
+        }
+    }
+}
