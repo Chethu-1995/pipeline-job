@@ -4,8 +4,8 @@ pipeline {
         stage('Build') {
             agent {label 'slave2'}
             steps {
+                git branch: 'main', url: 'https://github.com/rajath177/java-project.git'
                 sh '''
-                    git clone https://github.com/rajath177/java-project.git
                     cd /home/ec2-user/java/workspace/pipeline-job2/java-project
                     mvn clean install
                 '''    
@@ -23,7 +23,6 @@ pipeline {
             steps {
                 sh '''
                     echo "test cases are tested" >> log-test-file
-                    rm -rf /home/ec2-user/java/workspace/pipeline-job2/java-project
                 '''
             }            
         }
