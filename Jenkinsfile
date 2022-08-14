@@ -6,7 +6,7 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/rajath177/java-project.git'
                 sh '''
-                    cd /home/ec2-user/java/workspace/pipeline-job2/java-project
+                    cd /home/ec2-user/java/workspace/pipeline-job2
                     mvn clean install
                 '''    
             }
