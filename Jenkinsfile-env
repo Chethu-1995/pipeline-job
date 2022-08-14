@@ -6,7 +6,7 @@ pipeline {
         GIT_REPO = 'https://github.com/jaintpharsha/devops-june-2022.git'
     }
 
-    stage {
+    stages {
         stage('Build') {
             agent any
             environment {
