@@ -1,0 +1,38 @@
+pipeline {
+    agent none
+
+    environment {
+        BRANCH = 'main'
+        GIT_REPO = 'https://github.com/jaintpharsha/devops-june-2022.git'
+    }
+
+    stage {
+        stage('Build') {
+            agent any
+            environment {
+                BUILD_ENV = 'only_for_build_stage'
+            }
+            steps {
+                git branch: env.BRANCH, url: env.GIT_REPO
+                sh '''
+                    #!/bin/bash 
+                    pwd 
+                    ls > log-buildfile
+                    echo "This is build stage"
+                    sleep 5
+                '''  
+            }
+        }
+
+        stage('Deploy') {
+            agent { label 'slave1' } 
+            steps {
+                sh 'echo "This is deploy stage"'
+                sh 'ls > log-deployfile'
+                sh 'sleep 5'
+                echo "$BRANCH $GIT_REPO"
+                echo "$BUILD_ENV"
+            }
+        }
+    }
+}
